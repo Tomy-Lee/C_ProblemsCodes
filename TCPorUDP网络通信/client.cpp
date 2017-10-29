@@ -1,31 +1,31 @@
 #include <stdio.h> 
-#include<iostream>
+#include <iostream>
 #include <string.h>
 #include <stdlib.h>
 #include <Winsock2.h> 
 int main() { 
     char buffer[1024] = "\0";
 	SOCKET socket1; 
-	WSADATA wsaData;      //SocketµÄ°æ±¾ĞÅÏ¢ 
-    if (WSAStartup(MAKEWORD(2,2),&wsaData)) {       //µ÷ÓÃWindows Sockets DLL 
+	WSADATA wsaData;      //Socketçš„ç‰ˆæœ¬ä¿¡æ¯ 
+    if (WSAStartup(MAKEWORD(2,2),&wsaData)) {       //è°ƒç”¨Windows Sockets DLL 
           printf("init error\n"); 
           WSACleanup(); 
           return 0; 
     } 
     
 	struct sockaddr_in server; 
-	int len =sizeof(server);       //·şÎñÆ÷µØÖ·³¤¶È 
+	int len =sizeof(server);       //æœåŠ¡å™¨åœ°å€é•¿åº¦ 
 	
-	server.sin_family = AF_INET;        //AF_INETµØÖ·×å
-	server.sin_port = htons(22222);                           ///serverµÄ¼àÌı¶Ë¿Ú 
-	server.sin_addr.s_addr = inet_addr("192.168.199.208");           ///serverµÄµØÖ· 
+	server.sin_family = AF_INET;        //AF_INETåœ°å€æ—
+	server.sin_port = htons(22222);                           ///serverçš„ç›‘å¬ç«¯å£ 
+	server.sin_addr.s_addr = inet_addr("192.168.199.208");           ///serverçš„åœ°å€ 
 
-	socket1 = socket(AF_INET, SOCK_DGRAM, 0);     //´´½¨Ì×½Ó×Ö
+	socket1 = socket(AF_INET, SOCK_DGRAM, 0);     //åˆ›å»ºå¥—æ¥å­—
 
 	for(int i = 0; i < 1000; i++) { 
         itoa(i, buffer, 10);
 		printf(" message %d : %s\n", i, buffer); 
-       if (sendto(socket1, buffer, sizeof(buffer), 0, (struct sockaddr*)&server, len) != SOCKET_ERROR) {      //²ÎÊıÖĞsockaddr_in×ª»¯sockaddr 
+       if (sendto(socket1, buffer, sizeof(buffer), 0, (struct sockaddr*)&server, len) != SOCKET_ERROR) {      //å‚æ•°ä¸­sockaddr_inè½¬åŒ–sockaddr 
          	//Sleep(10); 
          	//if (recvfrom(socket1, buffer, sizeof(buffer), 0, (struct sockaddr*)&server, &len) != SOCKET_ERROR) 
            // printf("rece from server:%s\n",buffer); 
@@ -34,7 +34,7 @@ int main() {
      		printf("send failed!\n");	
      	}
      } 
-    closesocket(socket1);       //¹Ø±ÕÌ×½Ó×Ö 
-    WSACleanup();               //ÖÕÖ¹Ê¹ÓÃWindows Sockets DLL  
+    closesocket(socket1);       //å…³é—­å¥—æ¥å­— 
+    WSACleanup();               //ç»ˆæ­¢ä½¿ç”¨Windows Sockets DLL  
     return 0;
 }
